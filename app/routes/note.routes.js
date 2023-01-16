@@ -21,19 +21,19 @@ module.exports = function(app) {
 
   //List a single task
   app.get(
-    "/api/note/readSingleTask/:id",
+    "/api/note/readSingleTask/:note_id",
     [authJwt.verifyToken],controller.readSingleTask
   );
 
   //Update task by id
   app.put(
-    "/api/note/updateTask/:id",
+    "/api/note/updateTask/:note_id",
     [authJwt.verifyToken],controller.updateTask
   );
 
   //Delete task by id
   app.delete(
-    "/api/note/deleteTask/:id",
+    "/api/note/deleteTask/:note_id",
     [authJwt.verifyToken],controller.deleteTask
   );
 };

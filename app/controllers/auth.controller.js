@@ -82,22 +82,20 @@ exports.signin = async (req, res) => {
 };
 
 exports.verifyUser = async (req, res, next) => {
- 
-    User.findOne({
-      confirmationCode: req.params.confirmationCode,
-    }).then((user)=>{
-      console.log(user);
-      if(!user){
-        return res.status(404).send({ message: "User Not found." });
-      }
-      user.status = 'Active';
-      user.save((err) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-      });
-    
-      return res.status(200).send({message:"User Verified"});
-    }).catch((error)=> console.log("error",error));
+ try{
+  const user=await User.findOne({
+    where:{
+    confirmationCode: req.params.confirmationCode},
+  })
+
+    if(!user){
+      return res.status(404).send({ message: "User Not found." });
+    }
+    user.status='Active';
+  
+    return res.status(200).send({message:"User Verified"});
+
+}catch (error) {
+  return res.status(500).send({ message: error.message });
+}
 };

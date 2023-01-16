@@ -1,20 +1,17 @@
 const express = require("express");
-const cors = require("cors");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const dotenv=require("dotenv");
-
-
 dotenv.config(".env");
 const app = express();
 
-app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+
 app.use(cookieParser());
 app.use(
   cookieSession({
@@ -27,7 +24,7 @@ app.use(
 
 // database
 const db = require("./app/models");
-const Note = db.note;
+
 
 db.sequelize.sync({force:false}).then(()=>{
   console.log("Re-sync Done")
